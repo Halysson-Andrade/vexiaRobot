@@ -1,0 +1,7 @@
+pyppeteer==2.0.0
+pyautogui==0.9.54
+asyncio==3.4.3
+pillow==10.4.0
+opencv-python==4.10.0.84
+python-dotenv==1.0.1
+requests==2.32.3

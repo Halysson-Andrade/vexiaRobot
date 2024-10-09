@@ -1,0 +1,230 @@
+{
+    "timeReceivedFromBack": 1727472766737,
+    "timeSentFromBack": 1727472769147,
+    "errorCount": 0,
+    "errors": [],
+    "httpStatus": 200,
+    "data": {
+        "config": {
+            "ali_id": 8,
+            "ali_status": 1,
+            "ali_blob_path": "https://itajuba.blob.core.windows.net/vexia//importa%C3%A7oes/id_8_Teste%20Import%20TOA%20Automa%C3%A7%C3%A3o%20Well",
+            "ali_start_date": "16/08/2024",
+            "ali_end_date": "15/09/2024",
+            "ali_comp": "10/2024",
+            "ali_created_at": "2024-09-27T21:27:08.466Z",
+            "ali_updated_at": "2024-09-27T21:31:07.525Z",
+            "total_imported": 532,
+            "noError": 4,
+            "Error": 528
+        },
+        "1": {
+            "companyDetails": {
+                "cmp_id": 1,
+                "cmp_system_code": "1000",
+                "cmp_name": "falcao bauer",
+                "cmp_cnpj": "67.983.528/0001-07",
+                "cmp_uf": "sp",
+                "cmp_cei": "00000",
+                "cmp_docs_path": "c:/path",
+                "cmp_zip_code": "38400-068",
+                "cmp_address": "Rua Teste",
+                "cmp_neighborhood": "ipiranga",
+                "cmp_city": "São Paulo",
+                "cmp_number": "200",
+                "cmp_ecac_subject": "123546",
+                "cmp_ecac_issuer": "12354",
+                "cmp_ecac_serial": "ADSKFNLK005212500SDSD5421",
+                "cmp_created_at": "2024-09-26T01:40:01.947Z",
+                "cmp_updated_at": "2024-09-26T01:40:01.947Z",
+                "automations": [
+                    {
+                        "caut_id": 36,
+                        "aut_id": 1,
+                        "cmp_id": 1,
+                        "caut_created_at": "2024-09-27T19:31:41.863Z",
+                        "caut_updated_at": "2024-09-27T19:31:41.863Z"
+                    },
+                    {
+                        "caut_id": 37,
+                        "aut_id": 2,
+                        "cmp_id": 1,
+                        "caut_created_at": "2024-09-27T19:31:41.953Z",
+                        "caut_updated_at": "2024-09-27T19:31:41.953Z"
+                    },
+                    {
+                        "caut_id": 38,
+                        "aut_id": 3,
+                        "cmp_id": 1,
+                        "caut_created_at": "2024-09-27T19:31:42.043Z",
+                        "caut_updated_at": "2024-09-27T19:31:42.043Z"
+                    },
+                    {
+                        "caut_id": 39,
+                        "aut_id": 4,
+                        "cmp_id": 1,
+                        "caut_created_at": "2024-09-27T19:31:42.131Z",
+                        "caut_updated_at": "2024-09-27T19:31:42.131Z"
+                    }
+                ]
+            },
+            "branches": {
+                "1": {
+                    "branchDetails": {
+                        "brc_id": 1,
+                        "cmp_id": 1,
+                        "brc_system_code": "100",
+                        "brc_name": "RIO DE JANEIRO",
+                        "brc_cnpj": "67.983.528/0001-07",
+                        "brc_main_path": "c:/teste",
+                        "brc_created_at": "2024-09-26T01:40:01.947Z",
+                        "brc_updated_at": "2024-09-26T01:40:01.947Z",
+                        "automations": [
+                            {
+                                "baut_id": 1,
+                                "aut_id": 6,
+                                "brc_id": 1,
+                                "baut_created_at": "2024-09-26T01:40:01.947Z",
+                                "baut_updated_at": "2024-09-26T01:40:01.947Z"
+                            },
+                            {
+                                "baut_id": 2,
+                                "aut_id": 7,
+                                "brc_id": 1,
+                                "baut_created_at": "2024-09-26T01:40:01.947Z",
+                                "baut_updated_at": "2024-09-26T01:40:01.947Z"
+                            },
+                            {
+                                "baut_id": 3,
+                                "aut_id": 8,
+                                "brc_id": 1,
+                                "baut_created_at": "2024-09-26T01:40:01.947Z",
+                                "baut_updated_at": "2024-09-26T01:40:01.947Z"
+                            },
+                            {
+                                "baut_id": 4,
+                                "aut_id": 9,
+                                "brc_id": 1,
+                                "baut_created_at": "2024-09-26T01:40:01.947Z",
+                                "baut_updated_at": "2024-09-26T01:40:01.947Z"
+                            },
+                            {
+                                "baut_id": 5,
+                                "aut_id": 10,
+                                "brc_id": 1,
+                                "baut_created_at": "2024-09-26T01:40:01.947Z",
+                                "baut_updated_at": "2024-09-26T01:40:01.947Z"
+                            }
+                        ]
+                    },
+                    "borrowers": {
+                        "1": {
+                            "borrowerDetails": {
+                                "brr_id": 1,
+                                "brc_id": 1,
+                                "brr_status": 1,
+                                "brr_system_code": "200",
+                                "brr_gps_cod": "123",
+                                "brr_name": "obra xpto",
+                                "brr_cnpj": "42.735.434/0001-80",
+                                "brr_cno": "123546",
+                                "brr_zip_code": "08280430",
+                                "brr_address": "Rua:teste",
+                                "brr_neighborhood": "bairro teste",
+                                "brr_city": "São Paulo",
+                                "brr_number": "123",
+                                "brr_uf": "sp",
+                                "brr_created_at": "2024-09-26T01:40:01.947Z",
+                                "brr_updated_at": "2024-09-26T01:40:01.947Z"
+                            },
+                            "employees": [
+                                {
+                                    "empl_id": 5,
+                                    "empl_status": 0,
+                                    "empl_pj": "PJ100-068600",
+                                    "empl_matricula": "14000120",
+                                    "empl_name": "ADALBERTO SILVA FILHO",
+                                    "empl_monthly_doc_send": "Sim",
+                                    "empl_cc": "70036",
+                                    "cmp_id": 1,
+                                    "brc_id": 1,
+                                    "brr_id": 1,
+                                    "ali_id": 8,
+                                    "empl_created_at": "2024-09-27T21:27:11.133Z",
+                                    "empl_updated_at": "2024-09-27T21:27:11.133Z"
+                                },
+                                {
+                                    "empl_id": 8,
+                                    "empl_status": 0,
+                                    "empl_pj": "PJ100-068600",
+                                    "empl_matricula": "14000097",
+                                    "empl_name": "PAULO SÉRGIO DE ALMEIDA MOREIRA",
+                                    "empl_monthly_doc_send": "Sim",
+                                    "empl_cc": "70036",
+                                    "cmp_id": 1,
+                                    "brc_id": 1,
+                                    "brr_id": 1,
+                                    "ali_id": 8,
+                                    "empl_created_at": "2024-09-27T21:27:11.133Z",
+                                    "empl_updated_at": "2024-09-27T21:27:11.133Z"
+                                }
+                            ]
+                        },
+                        "3": {
+                            "borrowerDetails": {
+                                "brr_id": 3,
+                                "brc_id": 1,
+                                "brr_status": 0,
+                                "brr_system_code": "13",
+                                "brr_gps_cod": "1234",
+                                "brr_name": "Obra XPTOZ",
+                                "brr_cnpj": "10.787.589/0001-73",
+                                "brr_cno": "12345",
+                                "brr_zip_code": "08280430",
+                                "brr_address": "Rua: Francisco Jorge da Silva",
+                                "brr_neighborhood": "Cidade Lider",
+                                "brr_city": "São Paulo",
+                                "brr_number": "524",
+                                "brr_uf": "SP",
+                                "brr_created_at": "2024-09-27T21:26:32.536Z",
+                                "brr_updated_at": "2024-09-27T21:26:32.536Z"
+                            },
+                            "employees": [
+                                {
+                                    "empl_id": 6,
+                                    "empl_status": 0,
+                                    "empl_pj": "PJ100-083073",
+                                    "empl_matricula": "14000128",
+                                    "empl_name": "DANIEL NASCIMENTO PINTO DE OLIVEIRA",
+                                    "empl_monthly_doc_send": "Não",
+                                    "empl_cc": "70036",
+                                    "cmp_id": 1,
+                                    "brc_id": 1,
+                                    "brr_id": 3,
+                                    "ali_id": 8,
+                                    "empl_created_at": "2024-09-27T21:27:11.133Z",
+                                    "empl_updated_at": "2024-09-27T21:27:11.133Z"
+                                },
+                                {
+                                    "empl_id": 7,
+                                    "empl_status": 0,
+                                    "empl_pj": "PJ100-078533",
+                                    "empl_matricula": "14000119",
+                                    "empl_name": "MARCOS AURÉLIO DIAS DA SILVA",
+                                    "empl_monthly_doc_send": "Não",
+                                    "empl_cc": "70036",
+                                    "cmp_id": 1,
+                                    "brc_id": 1,
+                                    "brr_id": 3,
+                                    "ali_id": 8,
+                                    "empl_created_at": "2024-09-27T21:27:11.133Z",
+                                    "empl_updated_at": "2024-09-27T21:27:11.133Z"
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
