@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "dev": "python -m debugpy --listen 5678 entrySystem.py"
+  }
+}
