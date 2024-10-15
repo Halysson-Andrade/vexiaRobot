@@ -1,4 +1,6 @@
+import requestsApi
 import executeRDP
+from os import getenv
 import pyautogui
 import time
 import json
@@ -53,55 +55,9 @@ def launch_rdp():
     validationShow(step04)
     
     # Execução das automações
-    folhaAnalitica('1100',step06)
+    robotExecution('1100',step06)
+    robotExecution('1180',step06)
     
-    
-
-    #click_with_retries(payroll)
-
-    time.sleep(3.7)
-    
-
-    time.sleep(7)
-    click_with_retries("assets/payroll/reports.png")
-
-    time.sleep(0.7)
-    click_with_retries("assets/payroll/sendReports.png")
-
-    time.sleep(1)
-    click_with_retries("assets/payroll/maximizepayroll.png")
-
-    time.sleep(2)
-    click_with_retries("assets/payroll/monthly.png")
-
-    time.sleep(0.6)
-    click_with_retries("assets/payroll/bycentercost.png")
-
-    time.sleep(0.6)
-    click_with_retries("assets/payroll/monthlyreport.png")
-
-    time.sleep(0.6)
-    click_with_retries("assets/payroll/enterprise.png")
-
-    time.sleep(0.6)
-    click_with_retries("assets/payroll/enterpriseClick.png")
-
-    time.sleep(0.6)
-    click_with_retries("assets/payroll/date_time.png")
-
-    time.sleep(0.6)
-    click_daily_report()
-
-    time.sleep(0.6)
-    click_with_retries("assets/print/preview_print.png")
-
-    time.sleep(6)
-    click_with_retries("assets/print/contract.png")
-
-    time.sleep(1)
-    handle_contract_form()
-
-
 
 def fill_username():
     try:
@@ -132,6 +88,7 @@ def click(imgRef,exeptionControl):
                 create_folder ='assets/flow/create_folder.png'
                 currentFolder ='assets/flow/currentFolder.png'
                 firstClickToCreateFolderArquiteture ='assets/flow/firstClickToCreateFolderArquiteture.png'
+                pyautogui.press('esc')
                 click(start_folde_create_flow,0)
                 validationHide(start_folde_create_flow)
                 validationShow(wait_for_it)
@@ -263,19 +220,40 @@ def type_employee_names(employee_names):
         pyautogui.press('enter')
         time.sleep(1)
 ################################### Automações específicas ################################
-def folhaAnalitica(cod, imgRef):
+def robotExecution(cod, imgRef):
     try:
+        step = 0
         ########################################
         #paramsExecution = executeRDP.getParams()  # Capturando valores da Fila
-        step = 0
         for flow in paramsExecution:
             if step == 0:
                 configToInsert = paramsExecution.get(flow)
-                compDataToInsert = configToInsert.get('ali_comp')                
+                proc_id = configToInsert.get('proc_id')  
+                proc_comp_ref = configToInsert.get('proc_comp_ref') 
+                compDataToInsert = configToInsert.get('ali_comp')
+                ali_id = configToInsert.get('ali_id')                  
                 getnow = datetime.now().strftime("%Y%m%d_%H%M%S")
                 folderNameComp = compDataToInsert+'_'+getnow
                 folderNameComp = folderNameComp.replace('/', '')
+                if proc_comp_ref !="":
+                    folderNameComp = proc_comp_ref
                 step = 1
+                aut_id = 6
+                ## Registro do processamento:
+                token = requestsApi.login()
+                if token is None:
+                    print("Falha no registro da execução do Robô Folha Analíca - Step Login API")
+                else:
+                    updateFolderId = requestsApi.updateFolderId(token, proc_id, folderNameComp)
+                    if updateFolderId.status_code == 200:
+                        print("Armazenado ID da estrutura de pasta")
+                    else:
+                        print("Não foi armazenado o ID da Pasta, erro de comunicação com banco de dados")
+                    response = requestsApi.registerRobot(token, aut_id, proc_id, step, bot_sucess_message="Iniciando a execução da Automação", bot_error_message="")
+                    if response.status_code == 200:
+                        print("Registro da execução do robo criada com sucesso!")
+                    else:
+                        print("Erro no Registro da execução do robo")
             else:
                 companyToProcess = paramsExecution.get(flow)
                 companyData =companyToProcess.get('companyDetails')
@@ -303,13 +281,13 @@ def folhaAnalitica(cod, imgRef):
                 if companyData.get('cmp_system_code') == '1001':
                     companyToSelect = 'assets/flow/companyToSelect.png'
                     companySelected = 'assets/flow/companySelected.png'
-                    print = 'assets/flow/print.png'
+                    print_image = 'assets/flow/print.png'
                     printSelected = 'assets/flow/printSelected.png'
                     filter = 'assets/flow/filter.png'
                     filterSelected = 'assets/flow/filterSelected.png'
                     click(companyToSelect,0)
                     validationShow(companySelected)
-                    click(print,0)
+                    click(print_image,0)
                     validationShow(printSelected)
                     click(filter,0)
                     validationShow(filterSelected)
@@ -319,6 +297,7 @@ def folhaAnalitica(cod, imgRef):
                         brancheToProcess = branches.get(flow)
                         bracheDetails = brancheToProcess.get('branchDetails')
                         bracheSystemCode = bracheDetails.get('brc_system_code')
+                        brc_id = bracheDetails.get('brc_id')
                         pyautogui.write(bracheSystemCode)
                         pyautogui.press("tab")
                         bracheName = bracheDetails.get('brc_name')
@@ -327,6 +306,7 @@ def folhaAnalitica(cod, imgRef):
                             borrowToprocess = brancheBorrowers.get(key)
                             borrowerDetails = borrowToprocess.get('borrowerDetails')
                             borrowName = borrowerDetails.get('brr_name')
+                            brr_id = borrowerDetails.get('brr_id')
                             borrowEmployees = borrowToprocess.get('employees')
                             for empKey in borrowEmployees:                                
                                 employeeRegister = empKey.get('empl_matricula')
@@ -356,14 +336,20 @@ def folhaAnalitica(cod, imgRef):
                             isFolderExist= 'assets/flow/isFolderExist.png'
                             noFouders = 'assets/flow/noFouders.png'
                             checkFolders(folderNameComp,noFouders,0)
-                            checkFolders(bracheName,noFouders,0)
-                            checkFolders(borrowName,noFouders,1)
-                            checkFolders('Emissão de folha Analítica',noFouders,0)
-                            pyautogui.press('tab')
-                            pyautogui.press('tab')
                             time.sleep(0.1)
-                            pyautogui.write('impressão_dos_funcionários_alocados')
+                            checkFolders(bracheName,noFouders,0)
+                            time.sleep(0.1)
+                            checkFolders(borrowName,noFouders,1)
+                            time.sleep(0.1)
+                            checkFolders('Emissao de folha Analitica',noFouders,0)
+                            time.sleep(0.2)
+                            pyautogui.press('tab')
+                            time.sleep(0.2)
+                            pyautogui.press('tab')
+                            time.sleep(0.2)
+                            pyautogui.write('impressao_dos_funcionarios_alocados')
                             save_click ='assets/flow/save_click.png'
+                            time.sleep(0.2)
                             click(save_click,0)
                             validationHide(save_click)
                             validationShow(wait_for_it)
@@ -386,8 +372,22 @@ def folhaAnalitica(cod, imgRef):
                             time.sleep(0.1)
                             pyautogui.press("tab")
                             time.sleep(0.1)
+                            employeesToUpdate = requestsApi.updateEmployeesStatusTrue(token, ali_id, brc_id, brr_id)
+                            if employeesToUpdate.status_code == 200:
+                                print("Armazenado ID da estrutura de pasta")
+                            else:
+                                print("Não foi armazenado o ID da Pasta, erro de comunicação com banco de dados")
                         print(f"Finalizad   o processamento de {borrowName}.")  # Exemplo de ação ao término do loop
-
+                        pyautogui.press("tab")
+                        time.sleep(0.1)
+                        pyautogui.press("tab")
+                        time.sleep(0.1)
+                        pyautogui.press("tab")
+                        time.sleep(0.1)
+                        pyautogui.press("tab")
+                        time.sleep(0.1)
+                        pyautogui.press("tab")
+                        time.sleep(0.1)
                 else:
                     print("Configurar novas empresas")
     except ImageNotFoundException:
@@ -395,33 +395,70 @@ def folhaAnalitica(cod, imgRef):
         sys.exit() 
 
 def checkFolders(folderToFind,isFolderExist,controlBorrow):
+    print("Iniciando processo de validação das pastas:")
+    print("Pasta para criação", folderToFind)
     try:
         time.sleep(0.2)
         location = pyautogui.locateOnScreen(isFolderExist, confidence=0.8, grayscale=True)
         if location:
+            print("Pasta vazia")
             createNewFolder = 'assets/flow/createNewFolder.png'
             click(createNewFolder,0)
-            time.sleep(0.1)
+            time.sleep(0.2)
             pyautogui.press("f2")
-            time.sleep(0.1)
+            time.sleep(0.2)
             pyautogui.write(folderToFind)
             pyautogui.press('enter')
-            time.sleep(0.1)
-            pyautogui.press('enter')  
+            time.sleep(0.2)
+            pyautogui.press('enter') 
+            print("Pasta criada com sucesso!") 
     except Exception as e:
         while True:
                 if controlBorrow == 1 :
+                    print("Criação automática pasta de tomadores") 
                     createNewFolder = 'assets/flow/createNewFolder.png'
+                    time.sleep(0.1)
                     click(createNewFolder,0)
-                    time.sleep(0.1)
+                    time.sleep(0.2)
                     pyautogui.press("f2")
-                    time.sleep(0.1)
+                    time.sleep(0.2)
                     pyautogui.write(folderToFind)
                     pyautogui.press('enter')
-                    time.sleep(0.1)
+                    try:
+                        time.sleep(0.5)
+                        duplication = 'assets/flow/duplication.png'
+                        isDuplicated = pyautogui.locateOnScreen(duplication, confidence=0.8, grayscale=True)
+                        if isDuplicated:
+                            print("Pasta duplicada será ")    
+                            clickDuplication = 'assets/flow/clickDuplication.png' 
+                            validationShow(clickDuplication)
+                            click(clickDuplication,0)
+                            openCreated = 'assets/flow/openCreated.png' 
+                            validationShow(openCreated)
+                            time.sleep(1)
+                            pyautogui.press('delete')
+                            time.sleep(1)
+                            deleteFolder = 'assets/flow/deleteFolder.png' 
+                            validationShow(deleteFolder)
+                            clickDelete = 'assets/flow/clickDelete.png' 
+                            click(clickDelete,0)
+                            createNewFolder = 'assets/flow/createNewFolder.png'
+                            time.sleep(0.1)
+                            click(createNewFolder,0)
+                            time.sleep(0.2)
+                            pyautogui.press("f2")
+                            time.sleep(0.2)
+                            pyautogui.write(folderToFind)
+                            pyautogui.press('enter')
+                    except Exception as e:
+                        print("Pasta do Tomador é nova - Não é duplicada")   
+                    time.sleep(0.2)
                     pyautogui.press('enter') 
+                    print("Pasta criada com sucesso!") 
                     break
                 else:
+                    print("Não está Vazia") 
+                    print("Procurando pasta para ou criação ou entrar na pasta") 
                     time.sleep(0.2)
                     pyautogui.press("down")
                     time.sleep(0.2)
@@ -429,15 +466,19 @@ def checkFolders(folderToFind,isFolderExist,controlBorrow):
                     time.sleep(0.1)
                     pyautogui.hotkey("ctrl", "c")
                     copied_value = pyperclip.paste()
+                    time.sleep(0.1)
                     pyautogui.press('esc')                
                     try:
+                        print("Comparação das pastas") 
                         print(folderToFind)
                         print(copied_value)
                         if folderToFind == copied_value:
+                            print("Achou a pasta acessando a pasta") 
                             pyautogui.press('enter')
+                            copied_value = ''
                             break               
                         else:
-                            print("Check next folder")
+                            print("Pasta não localizadaCheck next folder")
                             time.sleep(0.2)
                             pyautogui.press("down")
                             time.sleep(0.2)
@@ -447,6 +488,7 @@ def checkFolders(folderToFind,isFolderExist,controlBorrow):
                             pyautogui.press('enter')
                             next_value = pyperclip.paste()
                             if next_value == copied_value:
+                                print("Ultima pasta iniciando a criação da nova pasta")
                                 createNewFolder = 'assets/flow/createNewFolder.png'
                                 click(createNewFolder,2)
                                 print("tratar exceção")                            
@@ -457,11 +499,16 @@ def checkFolders(folderToFind,isFolderExist,controlBorrow):
                                 pyautogui.press('enter')
                                 time.sleep(0.1)
                                 pyautogui.press('enter')
+                                print("Pasta criada com sucesso")
+                                copied_value = ''
                                 break
                             else:
+                                print("Varrendo a próxima pasta")
+                                copied_value = ''
                                 pyautogui.press("up")
                     except Exception as e:
                         print("Erro na criação de estrutura de pasta")
+                        copied_value = ''
                         break  
 
 def main():

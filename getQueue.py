@@ -49,6 +49,8 @@ def processar():
                     for item in data_result:
                     # Execute ações com cada 'item' em data_result
                         ali_id = str(item.get('ali_id', ''))
+                        proc_id = str(item.get('proc_id', ''))
+                        proc_comp_ref = str(item.get('proc_comp_ref', ''))
                         print("Buscando Parâmetros para execução")   
                         getParams = getenv('GETPARAMS')
                         getParams = getParams+ali_id
@@ -62,6 +64,8 @@ def processar():
                             params_result = params_data.get("data")  
                             if len(params_result):
                                 print("Execução realizada com sucesso!")  
+                                params_result['0']['proc_id'] = proc_id
+                                params_result['0']['proc_comp_ref'] = proc_comp_ref
                                 return params_result
                             else:
                                 return processar()

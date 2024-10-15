@@ -26,9 +26,11 @@ def launch_rdp():
             pyautogui.write(getenv('LOGIN_PASS'))
             time.sleep(0.5)
             if pyautogui.locateOnScreen(ok_button_path_win12, confidence=0.8, grayscale=True):
-                pyautogui.click(pyautogui.locateOnScreen(ok_button_path_win12, confidence=0.8, grayscale=True))
+                time.sleep(0.5)
+                pyautogui.doubleClick(pyautogui.locateOnScreen(ok_button_path_win12, confidence=0.8, grayscale=True))
             else:
                 if pyautogui.locateOnScreen(ok_button_path, confidence=0.8, grayscale=True):
+                    time.sleep(0.5)
                     pyautogui.click(pyautogui.locateOnScreen(ok_button_path, confidence=0.8, grayscale=True))
                 else:
                     print("Erro ao localizar botão de Ok para conectar a sessão remota")
