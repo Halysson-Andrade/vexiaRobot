@@ -5,7 +5,7 @@ import json
 import sys
 import pyperclip
 from datetime import datetime
-from pyautogui import ImageNotFoundException 
+from pyautogui import ImageNotFoundException
 
 paramsExecution = executeRDP.getParams()  # Capturando valores da Fila
 executeRDP.main()
@@ -24,16 +24,16 @@ def launch_rdp():
             location = pyautogui.locateOnScreen(wating, confidence=0.8, grayscale=True)
             if location:
                 print("Imagem encontrada.")
-                break               
+                break
             else:
                 print("Aguardando abertura do Metadados")
-                time.sleep(1)  # Espera 1 segundo antes de tentar novamente 
+                time.sleep(1)  # Espera 1 segundo antes de tentar novamente
         except Exception as e:
             # Exibe o erro exato que está ocorrendo
-            time.sleep(1)  # Espera 1 segundo antes de tentar novamente 
+            time.sleep(1)  # Espera 1 segundo antes de tentar novamente
             print(f"Erro ao localizar a imagem: {e}")
             launch_rdp()
-            break   
+            break
 
     fill_username()
 
@@ -51,16 +51,16 @@ def launch_rdp():
     validationShow(step03)
     click(step03,0)
     validationShow(step04)
-    
+
     # Execução das automações
     folhaAnalitica('1100',step06)
-    
-    
+
+
 
     #click_with_retries(payroll)
 
     time.sleep(3.7)
-    
+
 
     time.sleep(7)
     click_with_retries("assets/payroll/reports.png")
@@ -120,9 +120,9 @@ def click(imgRef,exeptionControl):
             click_with_retries(imgRef)
         else:
             print("Erro ao localizar a imagem", imgRef )
-            sys.exit() 
+            sys.exit()
     except (ImageNotFoundException, Exception) as e:
-            
+
             print("Erro ao localizar a imagem", imgRef )
             if imgRef == "assets/flow/createNewFolder.png"and exeptionControl == 2:
                 print("teste")
@@ -145,7 +145,7 @@ def click(imgRef,exeptionControl):
                 pyautogui.write("Automações_Yupa")
                 pyautogui.press('enter')
             else:
-                sys.exit() 
+                sys.exit()
             #Implementar o reprocessamento da automação
 
 def click_daily_report():
@@ -179,14 +179,14 @@ def validationHide(imgRef):
             location = pyautogui.locateOnScreen(imgRef, confidence=0.8, grayscale=True)
             if location:
                 print("Aguarndando sumir a imagem", imgRef)
-                time.sleep(0.2)  # Espera 1 segundo antes de tentar novamente               
+                time.sleep(0.2)  # Espera 1 segundo antes de tentar novamente
             else:
                  print("Próxima etapa avançada", imgRef)
-                 break 
-                
+                 break
+
         except Exception as e:
             print(f"Estapa executada com sucesso",imgRef)
-            break  
+            break
 def validationShow(imgRef):
     while True:
         try:
@@ -194,11 +194,11 @@ def validationShow(imgRef):
             location = pyautogui.locateOnScreen(imgRef, confidence=0.8, grayscale=True)
             if location:
                 print("Clique realizado com sucesso", imgRef)
-                break 
+                break
             else:
                 print("Aguarndando sumir a imagem", imgRef)
                 time.sleep(0.2)  # Espera 1 segundo antes de tentar novamente
-                
+
         except Exception as e:
             if imgRef =='assets/flow/currentFolder.png':
                 backPage ="assets/flow/backPage.png"
@@ -206,7 +206,7 @@ def validationShow(imgRef):
             print(f"Aguardando imagem de referencia",imgRef)
             time.sleep(0.2)
             validationShow(imgRef)
-            break  
+            break
 
 def alreadyLooged(image_path, button):
     try:
@@ -271,7 +271,7 @@ def folhaAnalitica(cod, imgRef):
         for flow in paramsExecution:
             if step == 0:
                 configToInsert = paramsExecution.get(flow)
-                compDataToInsert = configToInsert.get('ali_comp')                
+                compDataToInsert = configToInsert.get('ali_comp')
                 getnow = datetime.now().strftime("%Y%m%d_%H%M%S")
                 folderNameComp = compDataToInsert+'_'+getnow
                 folderNameComp = folderNameComp.replace('/', '')
@@ -328,7 +328,7 @@ def folhaAnalitica(cod, imgRef):
                             borrowerDetails = borrowToprocess.get('borrowerDetails')
                             borrowName = borrowerDetails.get('brr_name')
                             borrowEmployees = borrowToprocess.get('employees')
-                            for empKey in borrowEmployees:                                
+                            for empKey in borrowEmployees:
                                 employeeRegister = empKey.get('empl_matricula')
                                 pyautogui.write(employeeRegister)
                                 pyautogui.press("enter")
@@ -392,7 +392,7 @@ def folhaAnalitica(cod, imgRef):
                     print("Configurar novas empresas")
     except ImageNotFoundException:
         print("Erro seleção do relatório")
-        sys.exit() 
+        sys.exit()
 
 def checkFolders(folderToFind,isFolderExist,controlBorrow):
     try:
@@ -407,7 +407,7 @@ def checkFolders(folderToFind,isFolderExist,controlBorrow):
             pyautogui.write(folderToFind)
             pyautogui.press('enter')
             time.sleep(0.1)
-            pyautogui.press('enter')  
+            pyautogui.press('enter')
     except Exception as e:
         while True:
                 if controlBorrow == 1 :
@@ -419,7 +419,7 @@ def checkFolders(folderToFind,isFolderExist,controlBorrow):
                     pyautogui.write(folderToFind)
                     pyautogui.press('enter')
                     time.sleep(0.1)
-                    pyautogui.press('enter') 
+                    pyautogui.press('enter')
                     break
                 else:
                     time.sleep(0.2)
@@ -429,13 +429,13 @@ def checkFolders(folderToFind,isFolderExist,controlBorrow):
                     time.sleep(0.1)
                     pyautogui.hotkey("ctrl", "c")
                     copied_value = pyperclip.paste()
-                    pyautogui.press('esc')                
+                    pyautogui.press('esc')
                     try:
                         print(folderToFind)
                         print(copied_value)
                         if folderToFind == copied_value:
                             pyautogui.press('enter')
-                            break               
+                            break
                         else:
                             print("Check next folder")
                             time.sleep(0.2)
@@ -449,7 +449,7 @@ def checkFolders(folderToFind,isFolderExist,controlBorrow):
                             if next_value == copied_value:
                                 createNewFolder = 'assets/flow/createNewFolder.png'
                                 click(createNewFolder,2)
-                                print("tratar exceção")                            
+                                print("tratar exceção")
                                 time.sleep(0.2)
                                 pyautogui.press("f2")
                                 time.sleep(0.2)
@@ -462,7 +462,7 @@ def checkFolders(folderToFind,isFolderExist,controlBorrow):
                                 pyautogui.press("up")
                     except Exception as e:
                         print("Erro na criação de estrutura de pasta")
-                        break  
+                        break
 
 def main():
     launch_rdp()

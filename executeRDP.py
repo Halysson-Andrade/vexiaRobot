@@ -1,18 +1,18 @@
 from os import getenv, path
 import subprocess
 import platform
-import pyautogui 
+import pyautogui
 import getExe
 import time
-from dotenv import load_dotenv 
+from dotenv import load_dotenv
 load_dotenv()
 
 rdp_path = getenv('RDP_PATH')
 def getParams():
-    return getExe.getParams() 
+    return getExe.getParams()
 
 if (path.exists(rdp_path) == False):
-    getExe.processar()     
+    getExe.processar()
 
 def launch_rdp():
     ok_button_path = 'assets/init/OkWinGuard.png'
@@ -32,7 +32,7 @@ def launch_rdp():
                     pyautogui.click(pyautogui.locateOnScreen(ok_button_path, confidence=0.8, grayscale=True))
                 else:
                     print("Erro ao localizar botão de Ok para conectar a sessão remota")
-                    exit()            
+                    exit()
         else:
             if not pyautogui.locateOnScreen(ok_button_path, confidence=0.8, grayscale=True):
                 print("Botão 'Ok' não encontrado, pulando...")
@@ -48,7 +48,7 @@ def open_rdp_file(rdp_path):
         subprocess.Popen(['start', rdp_path], shell=True)
     else:
         print("Arquivo RDP não encontrado.")
-        getExe.processar()  
+        getExe.processar()
 
 
 def open_downloads_folder():

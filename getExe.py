@@ -1,7 +1,7 @@
 from os import getenv
 from asyncio import sleep, get_event_loop
-from pyppeteer import launch 
-from dotenv import load_dotenv 
+from pyppeteer import launch
+from dotenv import load_dotenv
 import getQueue
 
 def getParams():
